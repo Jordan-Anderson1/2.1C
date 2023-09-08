@@ -1,117 +1,94 @@
 <template>
-  <div class="todo-app">
-  <h1>Todo App</h1>
-  <input v-model="newTask" @keyup.enter="addTask" placeholder="Enter a new task">
-  <ul>
-  <li v-for="(task, index) in tasks" :key="index">
-  <input type="checkbox" v-model="task.completed">
-  <span :class="{ completed: task.completed }">{{ task.text }}</span>
-  <button @click="removeTask(index)">Remove</button>
-  </li>
-  </ul>
-  </div>
- </template>
+  <div class="hello">
+    <h1>User Input Form</h1>
+    <form @submit.prevent="submitForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" v-model="name" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" v-model="email" required>
+
+        <label for="message">Message:</label><br>
+        <textarea id="message" v-model="message" cols="30" rows="14" required></textarea><br>
+
+        <label for="subscribe">Subscribe to newsletter</label>
+        <input type="checkbox" id="subscribe" v-model="subscribe"><br>
+
+        <button type="submit">Submit</button>
+    
+    
+    
+    </form>
+
+    <div v-if="submitted">
+        <h2>Submitted Data:</h2>
+        <p><Strong>Name:</Strong>{{ name }}</p>
+        <p><Strong>Email:</Strong>{{ email }}</p>
+        <p><Strong>Message:</Strong>{{ message }}</p>
+        <p><Strong>Subscribed:</Strong>{{ subscribe ? 'yes' : 'no' }}</p>
+
+    </div>
+    <div v-else>
+        <h2>Submitted Data:</h2>
+        <p>Nothing yet submitted</p>
+    </div>
+
+    <div v-show="submitted">
+        <p>You've submitted the form!</p>
+    </div>
+
+    
+
+    
+    <div v-if="submitted">
+        <h1>Here's some useful links!</h1>
+        <li v-for="link in links" :key="link">
+            {{ link }}
+        </li>
+    </div>
+    
+</div>
   
- <script>
- export default {
+</template>
+
+<script>
+export default {
   data() {
-  return {
-  newTask: '',
-  tasks: []
-  };
+    return {
+      name: '',
+      email: '',
+      message: '',
+      subscribe: false,
+      submitted: false,
+      links: [
+        'deakin.edu.au',
+        'ontrack.deakin.edu.au'
+      ]
+    }
   },
   methods: {
-  addTask() {
-  if (this.newTask.trim() !== '') {
-  this.tasks.push({
-  text: this.newTask,
-  completed: false
-  });
-  this.newTask = '';
+    submitForm() {
+      this.submitted = true;
+    }
   }
-  },
-  removeTask(index) {
-  this.tasks.splice(index, 1);
-  }
-  }
- };
- </script>
-  
-  
-  <style scoped>
-  /* Style the outer container */
-  .todo-app {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease;
-  }
+}
 
-  /* Style the heading */
-  h1 {
-    font-size: 24px;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
+</script>
 
-  /* Style the input for adding tasks */
-  input[type="text"] {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  /* Style the task list */
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-
-  /* Style individual task items */
-  li {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-  }
-
-  /* Style the checkbox */
-  input[type="checkbox"] {
-    margin-right: 10px;
-  }
-
-  /* Style completed tasks */
-  .completed {
-    text-decoration: line-through;
-    color: #888;
-  }
-
-  /* Style the remove button */
-  button {
-    background-color: #e74c3c;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  /* Hover effect for the remove button */
-  button:hover {
-    background-color: #c0392b;
-  }
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+h3 {
+  margin: 40px 0 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
 </style>
